@@ -1,0 +1,3 @@
+/Users/Tiger/C++Projekte/Chatbot/build/CMakeFiles/membot.dir
+/Users/Tiger/C++Projekte/Chatbot/build/CMakeFiles/edit_cache.dir
+/Users/Tiger/C++Projekte/Chatbot/build/CMakeFiles/rebuild_cache.dir
