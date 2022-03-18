@@ -48,7 +48,6 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Copy Constructor" << std::endl;
    
     // allocate memory for the image and copy from source
-    //delete source._image;
     _image = new wxBitmap(*source._image); //copying of the image can be done with the function argument
     // copy handles from source
     _currentNode = source._currentNode;
