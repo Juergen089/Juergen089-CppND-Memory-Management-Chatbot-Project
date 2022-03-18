@@ -212,11 +212,10 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
             }
         }
     }
-    /*Task 5: localinstance of Chatbot
+    //Task 5: localinstance of Chatbot
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
-    */
+    //_chatBot->SetRootNode(rootNode);
+    //rootNode->MoveChatbotHere(_chatBot);
     ChatBot localChatBot = ChatBot("../images/chatbot.png");
     localChatBot.SetChatLogicHandle(this);
     localChatBot.SetRootNode(rootNode);

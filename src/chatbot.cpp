@@ -37,7 +37,7 @@ ChatBot::~ChatBot()
     // deallocate heap memory
     if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
     {
-        //delete _image;
+        delete _image;
         _image = NULL;
     }
 }
@@ -46,70 +46,75 @@ ChatBot::~ChatBot()
  ChatBot::ChatBot(const ChatBot &source) 
  {
     std::cout << "ChatBot Copy Constructor" << std::endl;
-    //Copy the handles of the source 
-    _chatLogic = source._chatLogic;
-    _chatLogic->SetChatbotHandle(this);    
-    _rootNode = source._rootNode;
+   
+    // allocate memory for the image and copy from source
+    //delete source._image;
+    _image = new wxBitmap(*source._image); //copying of the image can be done with the function argument
+    // copy handles from source
     _currentNode = source._currentNode;
-    //allocate new memory on th heap
-    _image = new wxBitmap();
-    //copy image from source to this
-    *_image = *source._image;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
  }
-
- // Task 2: implementatation of move constructor
-ChatBot::ChatBot(ChatBot &&source)
-{
-    std::cout << "ChatBot Move Constructor" << std::endl;
-    _chatLogic = source._chatLogic;
-    _chatLogic->SetChatbotHandle(this);    
-    _rootNode = source._rootNode;
-    _currentNode = source._currentNode;
-    *_image = *source._image; // move image, no new space with copying needed
-
-    // Null all source pointers due to move
-    source._chatLogic = nullptr; 
-    source._rootNode = nullptr;
-    source._currentNode = nullptr;
-    source._image = NULL; // wxwidgets uses NULL instead of nullptr
-}
 
 // Task 2: implementation of copy assignment operator
 ChatBot &ChatBot::operator=(const ChatBot &source)
 {
     std::cout << "ChatBot Copy Assigment Operator" << std::endl;
     if (this == &source) return *this; // prevent self assignment
-    //Copy the handles of the source 
-    _chatLogic = source._chatLogic;
-    _chatLogic->SetChatbotHandle(this);    
-    _rootNode = source._rootNode;
+
+    //same code as copy constructor
+    // allocate memory for the image and copy from source
+    _image = new wxBitmap(*source._image); //copying of the image can be done with the function argument
+    // copy handles from source
     _currentNode = source._currentNode;
-    //clear the image of the target object of the copy process 
-    delete _image;
-    //copy image from source to this
-    *_image = *source._image;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
     return *this;
+}
+
+ // Task 2: implementatation of move constructor
+ChatBot::ChatBot(ChatBot &&source)
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    
+    // move handles from the source
+    _image = source._image;
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    // invalidate handles from the source
+    source._image = NULL; // wxwidgets uses NULL instead nullptr
+    source._currentNode = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+    
 }
     
 //Task 2: implementation of move assigment operator
 ChatBot &ChatBot::operator=(ChatBot &&source)
 {
     std::cout << "ChatBot Move Assigment Operator" << std::endl;
+
   if (this == &source) return *this; // prevent self assignment
+    
+    
     //Move the handles of the source 
-    _chatLogic = source._chatLogic;
-    _chatLogic->SetChatbotHandle(this);    
-    _rootNode = source._rootNode;
+    _image = source._image;
     _currentNode = source._currentNode;
-    //clear the image of the target object of the copy process 
-    delete _image;
-    //copy image from source to this
-    *_image = *source._image;
-    // invalidate source
-    source._chatLogic = nullptr; 
-    source._rootNode = nullptr;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this); //the handle has to be set in addition, otherise there will be an error!
+
+    // invalidate handles from the source
+    source._image = NULL; // wxwidgets uses NULL instead nullptr
     source._currentNode = nullptr;
-    source._image = NULL;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
     
     return *this;
 }

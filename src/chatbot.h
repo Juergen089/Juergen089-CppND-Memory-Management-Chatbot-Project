@@ -3,7 +3,6 @@
 
 #include <wx/bitmap.h>
 #include <string>
-#include <memory>
 
 class GraphNode; // forward declaration
 class ChatLogic; // forward declaration
@@ -26,7 +25,7 @@ public:
     // constructors / destructors
     ChatBot();                     // constructor WITHOUT memory allocation
     ChatBot(std::string filename); // constructor WITH memory allocation
-    ~ChatBot();
+    ~ChatBot(); //destructor
 
     //Task 2: Implementation of the rule of five: adding copy constructor, move constructor, copy assigment operator and move assigment operator
     ChatBot(const ChatBot &source); //copy constructor
@@ -34,7 +33,7 @@ public:
     ChatBot &operator=(const ChatBot &source); //copy assignment operator
     ChatBot &operator=(ChatBot &&source); //move assignment operato
 
-    // getters / setters
+     // getters / setters
     void SetCurrentNode(GraphNode *node);
     void SetRootNode(GraphNode *rootNode) { _rootNode = rootNode; }
     void SetChatLogicHandle(ChatLogic *chatLogic) { _chatLogic = chatLogic; }
